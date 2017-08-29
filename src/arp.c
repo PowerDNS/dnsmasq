@@ -113,10 +113,17 @@ static int filter_mac(int family, char *addrp, char *mac, size_t maclen, void *p
 }
 
 /* If in lazy mode, we cache absence of ARP entries. */
-int find_mac(union mysockaddr *addr, unsigned char *mac, int lazy, time_t now)
+int find_mac(union mysockaddr *addr, unsigned char *mac, int lazy, time_t now) //, unsigned char *name, size_t namelen)
 {
   struct arp_record *arp, *tmp, **up;
   int updated = 0;
+
+  struct dhcp_lease *lease = lease_find_by_addr(addr->in.sin_addr);
+  if (lease && lease->hwaddr_type == ARPHRD_ETHER && lease->hwaddr_len == ETHER_ADDR_LEN) {
+    // memcpy(mac, lease->hwaddr, ETHER_ADDR_LEN);
+    memcpy(mac, lease->hostname, ETHER_ADDR_LEN);
+    return ETHER_ADDR_LEN;
+  }
 
  again:
   
