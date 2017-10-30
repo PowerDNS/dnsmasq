@@ -429,8 +429,15 @@ size_t add_edns0_config(struct dns_header *header, size_t plen, unsigned char *l
 {
   *check_subnet = 0;
 
-  if (option_bool(OPT_ADD_MAC))
+  if (option_bool(OPT_ADD_MAC)) {
     plen  = add_mac(header, plen, limit, source, now);
+
+    struct dhcp_lease *lease = lease_find_by_addr(source->in.sin_addr);
+    if (lease && lease->hostname) {
+      plen = add_pseudoheader(header, plen, limit, PACKETSZ, EDNS0_OPTION_NOMCPEID,
+        (unsigned char *)lease->hostname, strlen(lease->hostname), 0, 1);
+    }
+  }
   
   if (option_bool(OPT_MAC_B64) || option_bool(OPT_MAC_HEX))
     plen = add_dns_client(header, plen, limit, source, now);
