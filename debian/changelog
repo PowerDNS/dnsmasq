@@ -1,3 +1,9 @@
+dnsmasq (2.78-2addmac-hostname) unstable; urgency=low
+
+   * with PowerDNS addmac-hostname patch
+
+ -- Peter van Dijk <peter.van.dijk@powerdns.com>  Mon, 4 Dec 2017 15:22:00 +0000
+
 dnsmasq (2.78-1) unstable; urgency=high
 
    * New upstream.
