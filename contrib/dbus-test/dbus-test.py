@@ -10,7 +10,7 @@ array = dbus.Array()
 array.append(["1.2.3.5"])
 array.append(["1.2.3.4#664", "foobar.com"])
 array.append(["1003:1234:abcd::1%eth0", "eng.mycorp.com", "lab.mycorp.com"])
-print l.SetServersEx(array)
+print(l.SetServersEx(array))
 
 # Must create a new object for dnsmasq as the introspection gives the wrong
 # signature for SetServers (av) while the code only expects a bunch of arguments
@@ -19,7 +19,7 @@ p = bus.get_object("uk.org.thekelleys.dnsmasq", "/uk/org/thekelleys/dnsmasq", in
 l = dbus.Interface(p, dbus_interface="uk.org.thekelleys.dnsmasq")
 
 # The previous method; all addresses in machine byte order
-print l.SetServers(dbus.UInt32(16909060), # 1.2.3.5
+print(l.SetServers(dbus.UInt32(16909060), # 1.2.3.5
                    dbus.UInt32(16909061), # 1.2.3.4
                    "foobar.com",
                    dbus.Byte(0x10),       # 1003:1234:abcd::1
@@ -39,5 +39,5 @@ print l.SetServers(dbus.UInt32(16909060), # 1.2.3.5
                    dbus.Byte(0x00),
                    dbus.Byte(0x01),
                    "eng.mycorp.com",
-                   "lab.mycorp.com")
+                   "lab.mycorp.com"))
 
