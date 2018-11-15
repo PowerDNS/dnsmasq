@@ -19,10 +19,10 @@ p = bus.get_object("uk.org.thekelleys.dnsmasq", "/uk/org/thekelleys/dnsmasq", in
 l = dbus.Interface(p, dbus_interface="uk.org.thekelleys.dnsmasq")
 
 # The previous method; all addresses in machine byte order
-print(l.SetServers(dbus.UInt32(16909060), # 1.2.3.5
-                   dbus.UInt32(16909061), # 1.2.3.4
+print(l.SetServers(dbus.UInt32(16909060),  # 1.2.3.5
+                   dbus.UInt32(16909061),  # 1.2.3.4
                    "foobar.com",
-                   dbus.Byte(0x10),       # 1003:1234:abcd::1
+                   dbus.Byte(0x10),        # 1003:1234:abcd::1
                    dbus.Byte(0x03),
                    dbus.Byte(0x12),
                    dbus.Byte(0x34),
